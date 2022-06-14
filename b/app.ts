@@ -2,9 +2,14 @@ import express, { Express, Request, Response } from "express";
 import mongoose, { model } from "mongoose";
 import { FindBWPrime } from "./func/isPrime";
 import { body, validationResult } from "express-validator";
+import cors from "cors";
 
 const app: Express = express();
 const port = 3001;
+// express middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // mongodb connection
 const mongoDB = "mongodb+srv://test:N9yaGAR0fMIDR03I@cluster0.rmgzz.gcp.mongodb.net/acg?retryWrites=true&w=majority";
@@ -51,10 +56,6 @@ const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
 });
 // Schema to be used in mongoose
 const CalculatorModel = model("Calculator", CalculatorSchema);
-
-// express middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 app.get("/cal", async (_req: Request, res: Response) => {
   const cal = await CalculatorModel.find({}).sort({ _id: -1 }).limit(10).lean();

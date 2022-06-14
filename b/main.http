@@ -9,7 +9,7 @@ POST http://{{host}}/cal
 content-type: application/json
 
 {
-    "lowerNumber" : 15,
+    "lowerNumber" : 1,
     "higherNumber" : 21
 }
 

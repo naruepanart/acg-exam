@@ -2,47 +2,49 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import MainLayout from "../components/MainLayout";
+import axios from "axios";
 
 const Home: NextPage = () => {
-  const [startNumber, setStartNumber] = useState<number>(10);
-  const [endNumber, setEndNumber] = useState<number>(50);
+  const [lowerNumber, setLowerNumber] = useState<number>(0);
+  const [higherNumber, setHigherNumber] = useState<number>(0);
 
-  const GoCalculate = (s: number, e: number) => {
-    if (s < 10) return alert("[Start input] must be greater than 10");
-    if (e > 1000) return alert("[End input] must be less than 1000");
+  const GoCalculate = async () => {
+    if (lowerNumber < 10) return alert("[Start input] must be greater than 10");
+    if (higherNumber > 1000) return alert("[End input] must be less than 1000");
 
-    console.log(s);
-    console.log(e);
+    const toDB = {
+      lowerNumber,
+      higherNumber,
+    };
+
+    await axios.post("http://localhost:3001/cal", toDB);
+    setLowerNumber(0)
+    setHigherNumber(0)
+    alert("Save Success");
   };
 
   return (
     <MainLayout>
+      <h1>Calculate Prime Number</h1>
       <Form.Group className="mb-3">
         <Form.Label>Start</Form.Label>
         <Form.Control
-          value={startNumber}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-            setStartNumber(parseInt(e.target.value))
-          }
+          value={lowerNumber}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setLowerNumber(parseInt(e.target.value))}
           type="number"
-          placeholder="Enter Number"
+          placeholder="Start input"
         />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>End</Form.Label>
         <Form.Control
-          value={endNumber}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-            setEndNumber(parseInt(e.target.value))
-          }
+          value={higherNumber}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setHigherNumber(parseInt(e.target.value))}
           type="number"
-          placeholder="Enter Number"
+          placeholder="End input"
         />
       </Form.Group>
-      <Button
-        variant="primary"
-        onClick={() => GoCalculate(startNumber, endNumber)}
-      >
+      <Button variant="primary" onClick={() => GoCalculate()}>
         Calculate
       </Button>
     </MainLayout>
