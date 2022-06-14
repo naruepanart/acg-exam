@@ -10,25 +10,23 @@
 
 ```
 cd f
-npm run dev
+npm i && npm run dev
 ```
 
-port : http://localhost:3000
+frontend port : http://localhost:3000
 
 ### Backend
 
 ```
 cd b
-npm run dev
+npm i && npm run dev
 ```
 
-port : http://localhost:3001
+backend port : http://localhost:3001
 
-### Test 
+### Test
 
 ```
 cd b
 npm test
 ```
-
-

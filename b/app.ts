@@ -4,6 +4,7 @@ import { FindBWPrime } from "./func/isPrime";
 import { body, validationResult } from "express-validator";
 import cors from "cors";
 
+// Create a new express application instance
 const app: Express = express();
 const port = 3001;
 // express middleware
@@ -31,7 +32,7 @@ interface CalculatorModelInterface {
   createdAt: Date;
   updatedAt: Date;
 }
-
+// mongoose Model
 const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
   lowerNumber: {
     type: Number,
@@ -57,6 +58,7 @@ const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
 // Schema to be used in mongoose
 const CalculatorModel = model("Calculator", CalculatorSchema);
 
+// express route handlers
 app.get("/cal", async (_req: Request, res: Response) => {
   const cal = await CalculatorModel.find({}).sort({ _id: -1 }).limit(10).lean();
   try {
@@ -66,11 +68,13 @@ app.get("/cal", async (_req: Request, res: Response) => {
   }
 });
 
+// validate input
 const validatorSchema = [
   body("lowerNumber", "force lowerNumber to be a number greater than 10").notEmpty().isNumeric().isInt({ min: 10 }),
   body("higherNumber", "force higherNumber to be a number less than 1000").notEmpty().isNumeric().isInt({ max: 1000 }),
 ];
 
+// express route handlers
 app.post("/cal", validatorSchema, async (req: Request, res: Response) => {
   const { lowerNumber, higherNumber } = req.body;
 
