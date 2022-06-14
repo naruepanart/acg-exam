@@ -5,10 +5,20 @@ type ResponseIsPrime = {
   sumOutputLength: number;
 };
 
-export const FindBWPrime = (
-  lowerNumber: number,
-  higherNumber: number
-): ResponseIsPrime => {
+export const FindBWPrime = (lowerNumber: number, higherNumber: number): ResponseIsPrime | number => {
+  if (typeof lowerNumber == "string" || typeof higherNumber == "string") {
+    return 0;
+  }
+  if (lowerNumber > higherNumber) {
+    return 0;
+  }
+  if (lowerNumber <= 0 || higherNumber <= 0) {
+    return 0;
+  }
+  if (lowerNumber < 10 || higherNumber > 1000) {
+    return 0;
+  }
+
   let i;
   let sumArray: number[] = [];
 
@@ -36,5 +46,3 @@ export const FindBWPrime = (
     sumOutputLength: sumArray.length,
   };
 };
-
-/* console.log(FindBWPrime(2, 10)); */

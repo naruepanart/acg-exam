@@ -1,0 +1,15 @@
+@host=localhost:3001
+
+### 
+GET http://{{host}}/cal
+content-type: application/json
+
+### 
+POST http://{{host}}/cal
+content-type: application/json
+
+{
+    "lowerNumber" : 15,
+    "higherNumber" : 21
+}
+

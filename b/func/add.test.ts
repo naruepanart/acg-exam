@@ -38,9 +38,3 @@ describe("test function add", () => {
     });
   });
 });
-
-/* describe("test function", () => {
-  test("find prime 1 - 10", () => {
-    expect(findPrime(10)).toBe(3);
-  });
-}); */
