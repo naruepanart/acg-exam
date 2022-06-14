@@ -3,15 +3,6 @@ import express, { Express, Request, Response } from "express";
 const app: Express = express();
 const port = 3001;
 
-/* const isPrime = (num: number): boolean => {
-  for (let i = 2; i * i <= num; i++) {
-    if (num % i === 0) {
-      return false;
-    }
-  }
-  return num > 1;
-}; */
-
 export const findPrime = (n: number) => {
   for (var counter = 0; counter <= n; counter++) {
     var notPrime = false;
