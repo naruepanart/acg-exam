@@ -2,6 +2,10 @@
 
 ## Getting Started
 
+- nextjs
+- expressjs
+- mongodb
+
 ### Frontend
 
 ```
@@ -19,3 +23,12 @@ npm run dev
 ```
 
 port : http://localhost:3001
+
+### Test 
+
+```
+cd b
+npm test
+```
+
+
