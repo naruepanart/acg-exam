@@ -17,6 +17,7 @@ const options = {
 };
 mongoose.connect(mongoDB, options);
 
+// mongoose Schema
 interface CalculatorModelInterface {
   lowerNumber: number;
   higherNumber: number;
@@ -48,14 +49,15 @@ const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
-
+// Schema to be used in mongoose
 const CalculatorModel = model("Calculator", CalculatorSchema);
 
+// express middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/cal", async (_req: Request, res: Response) => {
-  const cal: any = await CalculatorModel.find({}).sort({ _id: -1 });
+  const cal = await CalculatorModel.find({}).sort({ _id: -1 }).limit(10).lean();
   try {
     res.json(cal);
   } catch (error) {
@@ -77,7 +79,7 @@ app.post("/cal", validatorSchema, async (req: Request, res: Response) => {
   }
 
   if (lowerNumber > higherNumber) {
-    return res.sendStatus(400)
+    return res.sendStatus(400);
   }
   const response = FindBWPrime(lowerNumber, higherNumber);
 
