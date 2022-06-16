@@ -51,26 +51,24 @@ const Home: NextPage = () => {
       <h1>Calculate Prime Number</h1>
       <form onSubmit={handleSubmit(GoCalculate)}>
         <Form.Group className="mb-3">
-          <Form.Label>Start</Form.Label>
+          <Form.Label>Start Input</Form.Label>
           <Form.Control
             value={lowerNumber}
             {...register("lowerNumber")}
             isInvalid={errors.lowerNumber}
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setLowerNumber(parseInt(e.target.value))}
             type="number"
-            placeholder="Start input"
           />
           <div className="invalid-feedback">{errors.lowerNumber?.message}</div>
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>End</Form.Label>
+          <Form.Label>End Input</Form.Label>
           <Form.Control
             value={higherNumber}
             {...register("higherNumber")}
             isInvalid={errors.higherNumber}
             onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setHigherNumber(parseInt(e.target.value))}
             type="number"
-            placeholder="End input"
           />
           <div className="invalid-feedback">{errors.higherNumber?.message}</div>
         </Form.Group>

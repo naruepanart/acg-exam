@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import MainLayout from "../components/MainLayout";
-import { Table } from "react-bootstrap";
-import { CalculatorModelInterface } from "../types/cal";
+import React, { useEffect, useState } from "react";
 import CardHistory from "../components/CardHistory";
+import MainLayout from "../components/MainLayout";
+import { CalculatorModelInterface } from "../types/cal";
 
 const History: React.FC<CalculatorModelInterface> = () => {
   const [data, setData] = useState([]);

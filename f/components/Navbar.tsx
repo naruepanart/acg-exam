@@ -1,9 +1,8 @@
-import React from "react";
 import { Nav } from "react-bootstrap";
 
 const Navbar = () => {
   return (
-    <div>
+    <div className="mb-3">
       <Nav defaultActiveKey="/" as="ul">
         <Nav.Item as="li">
           <Nav.Link href="/">Home</Nav.Link>
@@ -12,7 +11,6 @@ const Navbar = () => {
           <Nav.Link href="/history">History</Nav.Link>
         </Nav.Item>
       </Nav>
-      <hr/>
     </div>
   );
 };
