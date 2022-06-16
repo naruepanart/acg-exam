@@ -4,21 +4,19 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "build": "swc src -d dist",
-    "dev": "nodemon app.ts",
-    "start": "npm run build && node --experimental-modules --es-module-specifier-resolution=node dist/app.js",
+    "build": "tsc",
+    "dev": "nodemon src/app.ts",
+    "start": "npm run build && node dist/src/app.js",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "lint": "eslint . --ext .ts"
   },
-  "type": "module",
+
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.203",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.42",

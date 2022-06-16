@@ -59,6 +59,10 @@ const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
 const CalculatorModel = mongoose.model("Calculator", CalculatorSchema);
 
 // express route handlers
+app.get("/", async (_req: Request, res: Response) => {
+  res.json({ status: "OK" });
+});
+
 app.get("/cal", async (_req: Request, res: Response) => {
   const cal = await CalculatorModel.find({}).sort({ _id: -1 }).limit(10).lean();
   try {
@@ -100,4 +104,6 @@ app.post("/cal", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(port);
+app.listen(port, function () {
+  console.log(`http://localhost:${port}`);
+});

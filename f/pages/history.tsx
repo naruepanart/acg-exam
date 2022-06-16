@@ -3,6 +3,7 @@ import axios from "axios";
 import MainLayout from "../components/MainLayout";
 import { Table } from "react-bootstrap";
 import { CalculatorModelInterface } from "../types/cal";
+import CardHistory from "../components/CardHistory";
 
 const History: React.FC<CalculatorModelInterface> = () => {
   const [data, setData] = useState([]);
@@ -18,35 +19,16 @@ const History: React.FC<CalculatorModelInterface> = () => {
     setLoading(false);
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <MainLayout>
       <h1>History Calculate</h1>
-      {/* <p>{JSON.stringify(data)}</p> */}
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>Input Start</th>
-            <th>Input End</th>
-            <th>Prime Number</th>
-            <th>Count Prime Number</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        {loading && "Loading..."}
-        {data.map(({ _id, lowerNumber, higherNumber, sumOutput, sumOutputLength, createdAt }: any) => {
-          return (
-            <tbody key={_id}>
-              <tr>
-                <td>{lowerNumber}</td>
-                <td>{higherNumber}</td>
-                <td>{sumOutput.join(",")}</td>
-                <td>{sumOutputLength}</td>
-                <td>{createdAt}</td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </Table>
+      {data.map((x, i) => {
+        return <CardHistory key={i} x={x} />;
+      })}
     </MainLayout>
   );
 };

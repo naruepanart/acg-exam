@@ -12,6 +12,7 @@ const Navbar = () => {
           <Nav.Link href="/history">History</Nav.Link>
         </Nav.Item>
       </Nav>
+      <hr/>
     </div>
   );
 };
