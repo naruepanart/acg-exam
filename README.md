@@ -28,5 +28,5 @@ backend port : http://localhost:3001
 
 ```
 cd b
-npm test
+npm run test || npm run test:ui
 ```

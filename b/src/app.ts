@@ -1,8 +1,8 @@
-import express, { Express, Request, Response } from "express";
-import mongoose, { model } from "mongoose";
-import { FindBWPrime } from "./func/isPrime";
-import { body, validationResult } from "express-validator";
 import cors from "cors";
+import express, { Express, Request, Response } from "express";
+import Joi from "joi";
+import mongoose from "mongoose";
+import { FindBWPrime } from "./func/isPrime";
 
 // Create a new express application instance
 const app: Express = express();
@@ -30,17 +30,18 @@ interface CalculatorModelInterface {
   sumOutput: Array<number>;
   sumOutputLength: number;
   createdAt: Date;
-  updatedAt: Date;
 }
 // mongoose Model
 const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
   lowerNumber: {
     type: Number,
     required: true,
+    min: 10,
   },
   higherNumber: {
     type: Number,
     required: true,
+    max: 1000,
   },
   sumOutput: [
     {
@@ -53,10 +54,9 @@ const CalculatorSchema = new mongoose.Schema<CalculatorModelInterface>({
     required: true,
   },
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
 });
 // Schema to be used in mongoose
-const CalculatorModel = model("Calculator", CalculatorSchema);
+const CalculatorModel = mongoose.model("Calculator", CalculatorSchema);
 
 // express route handlers
 app.get("/cal", async (_req: Request, res: Response) => {
@@ -68,36 +68,36 @@ app.get("/cal", async (_req: Request, res: Response) => {
   }
 });
 
-// validate input
-const validatorSchema = [
-  body("lowerNumber", "force lowerNumber to be a number greater than 10").notEmpty().isNumeric().isInt({ min: 10 }),
-  body("higherNumber", "force higherNumber to be a number less than 1000").notEmpty().isNumeric().isInt({ max: 1000 }),
-];
-
+// joi validation
+const calSchema = Joi.object().keys({
+  lowerNumber: Joi.number().integer().min(10).max(1000).required(),
+  higherNumber: Joi.number().integer().min(10).max(1000).required(),
+});
 // express route handlers
-app.post("/cal", validatorSchema, async (req: Request, res: Response) => {
-  const { lowerNumber, higherNumber } = req.body;
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-
-  if (lowerNumber > higherNumber) {
-    return res.sendStatus(400);
-  }
-  const response = FindBWPrime(lowerNumber, higherNumber);
-
-  const cal = new CalculatorModel(response);
-  await cal.save();
-
+app.post("/cal", async (req: Request, res: Response) => {
   try {
-    res.json(response);
+    // validate request body
+    const validation = calSchema.validate(req.body);
+    const { value, error } = validation;
+    if (error) {
+      const message = error.details.map((x) => x.message);
+      return res.status(422).json({
+        error: message,
+      });
+    }
+    const { lowerNumber, higherNumber } = value;
+    // find if the request body is already in the database
+    if (lowerNumber > higherNumber) {
+      return res.sendStatus(400);
+    }
+    // find the prime numbers
+    const response = FindBWPrime(lowerNumber, higherNumber);
+    const cal = new CalculatorModel(response);
+    await cal.save();
+    return res.sendStatus(201);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+app.listen(port);

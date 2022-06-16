@@ -2,15 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MainLayout from "../components/MainLayout";
 import { Table } from "react-bootstrap";
-
-interface CalculatorModelInterface {
-  lowerNumber: number;
-  higherNumber: number;
-  sumOutput: Array<number>;
-  sumOutputLength: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { CalculatorModelInterface } from "../types/cal";
 
 const History: React.FC<CalculatorModelInterface> = () => {
   const [data, setData] = useState([]);
