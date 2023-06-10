@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // mongodb connection
-const mongoDB = "mongodb+srv://test:N9yaGAR0fMIDR03I@cluster0.rmgzz.gcp.mongodb.net/acg?retryWrites=true&w=majority";
+const mongoDB = "mongodb+srv://JtCqGymTW0vlPTIQ:G0zHqjQ9VnVo5QWs@cluster0.vnqxc.mongodb.net/a8?retryWrites=true&w=majority";
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
